@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>FumigaDron</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/adminlte.css">
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/datatables.css"/>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body class="hold-transition layout-top-nav">
+    <!-- Spinner -->
+    <div>
+        <div id="spinner-back"></div>
+        <div id="spinner-front">
+          <img src="img/spinner.gif"/><br>
+          Conectando con la Blockchain...
+        </div>
+    </div>
+    <div class="wrapper">
+        <!-- Header -->
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+            <div class="container">
+                <div class="navbar-brand">
+                    <img src="img/logo.png" alt="FumigaDron Logo" class="brand-image"
+                    style="opacity: .8">
+                    <span class="brand-text font-weight-light">FumigaDron</span>
+                </div>
+
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a id="btnAcercaDe" class="mr-3 btn btn-sm btn-light" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlAcercaDe">
+                                <span>Acerca de</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="btnRedBlockchain" class="btn btn-sm btn-outline-danger" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlRedConfig">
+                                <span>Desconectado</span> <i class="fas fa-wifi"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Content -->
+        <div class="content-wrapper">
+            <div class="content">
+                <!-- Connect to network -->
+                <div id="connect-interface" class="container centered-container">
+                    <div class="login-box">
+                      <div class="login-logo">
+                        <span>FumigaDron</span>
+                      </div>
+                      <div class="card">
+                        <div class="card-body login-card-body">
+                          <p class="login-box-msg">Realice los pasos de preparación en el nodo conectado a la red blockchain antes de conectar.</p>
+                          <div class="text-center">
+                            <a class="btn btn-primary btn-lg" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlRedConfig">Conectar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <!-- Main interface -->
+                <div id="main-interface" class="container d-none">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-primary card-outline card-outline-tabs mt-3">
+                                <!-- Tabs -->
+                                <div class="card-header p-0 pt-1 border-bottom-0">
+                                    <ul class="nav nav-tabs" id="user-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true" onclick="App.cargarEmpresa()">Empresa</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a id="Propietario1" class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false" onclick="App.cargarPropietario(1)">Propietario 1</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false" onclick="App.cargarPropietario(2)">Propietario 2</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false" onclick="App.cargarPropietario(3)">Propietario 3</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- TabContent -->
+                                <div class="card-body">
+                                    <div class="tab-content" id="user-tabsContent">
+                                        <!-- TabEmpresa -->
+                                        <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                                            <div id="seccionConectar">
+                                                <div class="text-center mt-3 mb-3">
+                                                    <a class="btn btn-primary" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlLoginUsuario" onclick="App.setLoginUsuario('Empresa');">
+                                                        Acceder <span class="fas fa-user-circle ml-1"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="d-none" id="seccionPrincipal">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="card card-outline card-primary">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title m-0">Información de la Empresa</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="card-text">
+                                                                  <fieldset>
+                                                                    <div>
+                                                                      <label for="outEmpresaNombre">Nombre</label>
+                                                                      <output name="outEmpresaNombre" id="outEmpresaNombre">-</output>
+                                                                    </div>
+                                                                    <div>
+                                                                      <label for="outEmpresaFumiCoins">Balance de FumiCoins</label>
+                                                                      <output name="outEmpresaFumiCoins" id="outEmpresaFumiCoins">-</output>
+                                                                    </div>
+                                                                  </fieldset>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer text-right">
+                                                                <a class="btn btn-outline-primary"  data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlInfoEmpresa">Editar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card card-outline card-primary">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title m-0">Lista de Drones</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <table id="tblDrones" class="table table-sm table-hover" style="width:100%"></table>
+                                                            </div>
+                                                            <div class="card-footer text-right">
+                                                                <a class="btn btn-outline-primary mr-1"  data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlAgregarDron" onclick="App.nuevoDron()">Agregar Dron</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="card card-outline card-primary">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title m-0">Trabajos Pendientes</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <table id="tblTrabajos" class="table table-sm table-hover" style="width:100%"></table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- TabPropietario -->
+                                        <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                                            <div id="seccionConectarPropietario">
+                                                <div class="text-center mt-3 mb-3">
+                                                    <a class="btn btn-primary" data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlLoginUsuario" onclick="App.setLoginUsuario('Propietario');">
+                                                        Acceder <span class="fas fa-user-circle ml-1"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="d-none" id="seccionPrincipalPropietario">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="card card-outline card-primary">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title m-0">Información del Propietario</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="card-text">
+                                                                  <fieldset>
+                                                                    <div>
+                                                                      <label for="outPropietarioNombre">Nombre</label>
+                                                                      <output name="outPropietarioNombre" id="outPropietarioNombre">-</output>
+                                                                    </div>
+                                                                    <div>
+                                                                      <label for="outPropietarioFumiCoins">Balance de FumiCoins</label>
+                                                                      <output name="outPropietarioFumiCoins" id="outPropietarioFumiCoins">-</output>
+                                                                    </div>
+                                                                    <div>
+                                                                      <label for="outPropietarioEther">Balance de Ether</label>
+                                                                      <output name="outPropietarioEther" id="outPropietarioEther">-</output>
+                                                                    </div>
+                                                                  </fieldset>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer text-right">
+                                                                <a class="btn btn-outline-primary" href="#" onclick="App.obtenerFumi()">Obtener FumiCoins</a>
+                                                                <a class="btn btn-outline-primary ml-2"  data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlInfoPropietario">Editar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card card-outline card-primary">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title m-0">Lista de Parcelas</h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <table id="tblParcelas" class="table table-sm table-hover" style="width:100%"></table>
+                                                            </div>
+                                                            <div class="card-footer text-right">
+                                                              <a class="btn btn-outline-primary mr-1"  data-widget="control-sidebar" data-slide="true" href="#" role="button" data-toggle="modal" data-target="#mdlAgregarParcela" onclick="App.nuevaParcela()">Agregar Parcela</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Logs -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-outline card-primary">
+                              <div class="card-header">
+                                <h3 class="card-title">Log de interacción con la Blockchain</h3>
+                              </div>
+                              <div class="card-body" id="card-event-log">
+                                <ul class="list-group" id="event-log">
+                                </ul>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="float-left d-none d-sm-inline"><b>FumigaDron</b> &copy; 2021</div>. Todos los derechos reservados por Jesus Steer.
+            <div class="float-right d-none d-sm-inline">
+                Fumigación descentralizada a través de drones.
+            </div>
+        </footer>
+        </div>
+    </div>
+    <!-- Modal boxes -->
+    <div>
+        <!-- Modal Configuracion de red -->
+        <div class="modal fade" id="mdlRedConfig" tabindex="-1" role="dialog" aria-labelledby="mdlRedConfig" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Configuracion de red</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="redConfig" id="redConfig1" checked>
+                                <label class="form-check-label" for="redConfig1">
+                                    Truffle develop
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="redConfig" id="redConfig2">
+                                <label class="form-check-label" for="redConfig2">
+                                    Ganache
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="redConfig" id="redConfig3">
+                                <label class="form-check-label" for="redConfig3">
+                                    Alastria testnet
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="redConfig" id="redConfig4">
+                                <label class="form-check-label" for="redConfig4">
+                                    Alastria
+                                </label>
+                            </div>
+                            <div>
+                                <label for="proveedorWeb3" class="form-label">Proveedor Web3</label>
+                                <input type="text" class="form-control" id="proveedorWeb3" value="HTTP://127.0.0.1:8545">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <!--button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button-->
+                        <button type="button" class="btn btn-primary" onclick="App.connect()">Conectar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Acerca de -->
+        <div class="modal fade" id="mdlAcercaDe" tabindex="-1" role="dialog" aria-labelledby="mdlRedConfig" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Acerca de FumigaDron</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Trabajo final para optar por el titulo <a target="__blank" href="https://www.unir.net/ingenieria/curso-blockchain-technology/">Experto Universitario en Desarrollo de Aplicaciones Blockchain</a> realizado por UNIR (Universidad internacional de la Rioja) en colaboración con el consorcio Alastria.</p>
+                         <p>Elaborado por el ingeniero Jesús Steer Varela. <a target="_blank" href="https://www.linkedin.com/in/jesteer/">LinkedIn</a></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Login de usuario -->
+        <div class="modal fade" id="mdlLoginUsuario" tabindex="-1" role="dialog" aria-labelledby="mdlLoginUsuario" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLoginTitulo">Acceder como usuario: <span>Usuario</span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="input-group mb-3">
+                              <input type="text" class="form-control" placeholder="Dirección de la cuenta" id="inpCuenta">
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <span class="fas fa-address-card"></span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="input-group mb-3">
+                              <input type="password" class="form-control" placeholder="Password [Opcional]" id="inpPassword">
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <span class="fas fa-lock"></span>
+                                </div>
+                              </div>
+                            </div>
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                              Ingrese el password en caso de que se requiera desbloquear la cuenta.
+                            </small>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="App.loginUsuario()">Acceder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Información de la Empresa -->
+        <div class="modal fade" id="mdlInfoEmpresa" tabindex="-1" role="dialog" aria-labelledby="mdlInfoEmpresa" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Información de la Empresa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div>
+                                <label for="inpEmpresaNombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="inpEmpresaNombre">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="App.guardarInformacionEmpresa()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Agregar Dron -->
+        <div class="modal fade" id="mdlAgregarDron" tabindex="-1" role="dialog" aria-labelledby="mdlAgregarDron" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Informacion del Dron</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div>
+                                <label for="inpDronCodigo" class="form-label">Codigo</label>
+                                <input type="text" class="form-control" id="inpDronCodigo">
+                            </div>
+                            <div>
+                                <label for="inpDronAltMax" class="form-label">Altitud maxima</label>
+                                <input type="text" class="form-control" id="inpDronAltMax" autofocus>
+                            </div>
+                            <div>
+                                <label for="inpDronAltMin" class="form-label">Altitud minima</label>
+                                <input type="text" class="form-control" id="inpDronAltMin">
+                            </div>
+                            <div>
+                                <label for="inpDronCoste" class="form-label">Coste</label>
+                                <input type="text" class="form-control" id="inpDronCoste">
+                            </div>
+                            <div class="mt-2">
+                                <label class="form-label mr-2">Pesticidas aceptados</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="checkbox" name="chkDronPesticidas" id="chkDronPesticidas1" value="A">
+                                      <label class="form-check-label" for="chkDronPesticidas1">A</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="checkbox" name="chkDronPesticidas" id="chkDronPesticidas2" value="B">
+                                      <label class="form-check-label" for="chkDronPesticidas2">B</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="checkbox" name="chkDronPesticidas" id="chkDronPesticidas3" value="C">
+                                      <label class="form-check-label" for="chkDronPesticidas3">C</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="checkbox" name="chkDronPesticidas" id="chkDronPesticidas4" value="D">
+                                      <label class="form-check-label" for="chkDronPesticidas4">D</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="checkbox" name="chkDronPesticidas" id="chkDronPesticidas5" value="E">
+                                      <label class="form-check-label" for="chkDronPesticidas5">E</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="App.guardarInformacionDron()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Información del Propietario -->
+        <div class="modal fade" id="mdlInfoPropietario" tabindex="-1" role="dialog" aria-labelledby="mdlInfoPropietario" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Información del Propietario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div>
+                                <label for="inpPropietarioNombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="inpPropietarioNombre">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="App.guardarInformacionPropietario()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Agregar Parcela -->
+        <div class="modal fade" id="mdlAgregarParcela" tabindex="-1" role="dialog" aria-labelledby="mdlAgregarDron" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Informacion de la Parcela</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div>
+                                <label for="inpParcelaNombre" class="form-label">Nombre de la Parcela</label>
+                                <input type="text" class="form-control" id="inpParcelaNombre">
+                            </div>
+                            <div>
+                                <label for="inpParcelaAltMax" class="form-label">Altitud maxima</label>
+                                <input type="text" class="form-control" id="inpParcelaAltMax">
+                            </div>
+                            <div>
+                                <label for="inpParcelaAltMin" class="form-label">Altitud minima</label>
+                                <input type="text" class="form-control" id="inpParcelaAltMin">
+                            </div>
+                            <div>
+                                <label class="form-label mr-2">Pesticida</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="radPesticida" id="radPesticida1" value="A">
+                                      <label class="form-check-label" for="radPesticida1">A</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="radPesticida" id="radPesticida2" value="B">
+                                      <label class="form-check-label" for="radPesticida2">B</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="radPesticida" id="radPesticida3" value="C">
+                                      <label class="form-check-label" for="radPesticida3">C</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="radPesticida" id="radPesticida4" value="D">
+                                      <label class="form-check-label" for="radPesticida4">D</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="radPesticida" id="radPesticida5" value="E">
+                                      <label class="form-check-label" for="chkDronPesticidas5">E</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="App.guardarInformacionParcela()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Solicitar Trabajo -->
+        <div class="modal fade" id="mdlDronesParaTrabajo" tabindex="-1" role="dialog" aria-labelledby="mdlAgregarDron" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Solicitar Trabajo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dronesParaTrabajo" class="d-none">
+                            <div class="list-group" id="lstDronesParaTrabajo"></div>
+                        </div>
+                        <div id="noDronesParaTrabajo" class="">
+                            <p>No hay drones disponibles para el trabajo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/adminlte.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/datatables.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

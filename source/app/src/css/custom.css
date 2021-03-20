@@ -1,0 +1,41 @@
+/* [FULL SCREEN SPINNER] */
+#spinner-back, #spinner-front {
+  position: fixed;
+  width: 100vw;
+  transition: all 1s;
+  visibility: hidden;
+  opacity: 0;
+}
+#spinner-back {
+  z-index: 1080;
+  height: 100vh;
+  background-color: #00000087;
+}
+#spinner-front {
+  z-index: 1081;
+  color: #fff;
+  text-align: center;
+  margin-top: 50vh;
+  transform: translateY(-50%);
+}
+#spinner-back.show, #spinner-front.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#card-event-log {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.centered-container {
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 50vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
