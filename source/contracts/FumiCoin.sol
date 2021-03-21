@@ -6,7 +6,9 @@ import "./OpenZeppelin/ownership/Ownable.sol";
 
 contract FumiCoin is ERC20, ERC20Detailed, Ownable  {
 
-    constructor() ERC20Detailed("FumiCoin", "FUMI", 0) public {}
+    constructor() ERC20Detailed("FumiCoin", "FUMI", 0) public {
+        return;
+    }
 
     function mint(address to, uint256 amount) public { // onlyOwner
         _mint(to, amount);

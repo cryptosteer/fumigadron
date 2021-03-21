@@ -9,13 +9,16 @@ contract BaseDronParcela is ERC721Full, Ownable {
     mapping(uint256 => uint256) public alt_max;
     mapping(uint256 => uint256) public alt_min;
 
-    constructor() public {}
+    constructor() public {
+        return;
+    }
 
     function getNumeroTokens() public view returns(uint256) {
         return(balanceOf(msg.sender));
     }
-    
+
     function getTokenIdByIndex(uint256 index) public view returns(uint256) {
+        require(index < getNumeroTokens(), "Indice no debe ser mayor al numero de tokens");
         return(tokenOfOwnerByIndex(msg.sender, index));
     }
 

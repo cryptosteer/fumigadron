@@ -9,9 +9,9 @@ contract FumigaDron is Dron {
     string nombreEmpresa;
     Propietarios private _propietarios;
     FumiCoin private _fumicoin;
- 
+
     constructor(address propietarios_address, address fumicoin_address) public {
-         nombreEmpresa = "DronTech Corp";
+        nombreEmpresa = "DronTech Corp";
         _propietarios = Propietarios(propietarios_address);
         _fumicoin = FumiCoin(fumicoin_address);
     }
@@ -21,10 +21,11 @@ contract FumigaDron is Dron {
     }
 
     function setNombreEmpresa(string nombreEmpresa_) public onlyOwner {
+        require(bytes(nombreEmpresa_).length > 0, "Nombre de empresa no debe estar vacio");
         nombreEmpresa = nombreEmpresa_;
     }
 
-    function realizarTrabajo(uint256 idParcela) public {
+    function realizarTrabajo(uint256 idParcela) public onlyOwner {
         _propietarios.eliminarSolicitudTrabajo(idParcela);
         emit TrabajoConfirmado(idParcela);
     }
@@ -32,4 +33,4 @@ contract FumigaDron is Dron {
     event TrabajoConfirmado(
         uint256 indexed idParcela
     );
- }
+}

@@ -47,6 +47,7 @@ contract Propietarios is Parcela {
     }
 
     function setPropietarioNombre(string nombre_) public {
+        require(bytes(nombre_).length > 0, "Nombre de propietario no debe estar vacio");
         uint256 id = propietarioId[msg.sender];
         propietarioNombre[id] = nombre_;
     }
@@ -56,14 +57,10 @@ contract Propietarios is Parcela {
         return parcelaOwner;
     }
 
-    function getParcela(uint256 id) public view returns(string, uint256, uint256, string, bool) {
-        return (parcelaNombre[id], alt_max[id], alt_min[id], pesticida_aceptado[id], isParcelaEnSolicitud(id));
-    }
-
     function isParcelaEnSolicitud(uint256 idParcela) public view returns (bool) {
         if (_idParcela_solicitudIndex[idParcela] != 0)
             return true;
-        else 
+        else
             return false;
     }
 
@@ -82,31 +79,27 @@ contract Propietarios is Parcela {
     }
 
     function solicitarTrabajo(uint256 idDron, uint256 idParcela) public {
-        SolicitudTrabajo memory solicitud = SolicitudTrabajo(idParcela, idDron); 
+        require(!isParcelaEnSolicitud(idParcela), "No debe existir una solicitud activa de esa parcela");
+        SolicitudTrabajo memory solicitud = SolicitudTrabajo(idParcela, idDron);
         uint256 index = _solicitudesTrabajo.push(solicitud);
         _idParcela_solicitudIndex[idParcela] = index;
         emit TrabajoSolicitado(idDron, idParcela);
     }
 
     function eliminarSolicitudTrabajo(uint256 idParcela) public {
-        delete _solicitudesTrabajo[_idParcela_solicitudIndex[idParcela]-1];
-        delete _idParcela_solicitudIndex[idParcela];
+        uint256 index = _idParcela_solicitudIndex[idParcela]-1;
+        require(index < _solicitudesTrabajo.length, "Indice no debe ser mayor al numero de solicitudes");
+        for (uint i = index; i<_solicitudesTrabajo.length-1; i++){
+            _solicitudesTrabajo[i] = _solicitudesTrabajo[i+1];
+            _idParcela_solicitudIndex[_solicitudesTrabajo[i].idParcela] = i+1;
+        }
+        delete _solicitudesTrabajo[_solicitudesTrabajo.length-1];
         _solicitudesTrabajo.length = _solicitudesTrabajo.length-1;
+        delete _idParcela_solicitudIndex[idParcela];
     }
 
     event TrabajoSolicitado(
         uint256 idDron,
         uint256 indexed idParcela
     );
-
-    /*
-    modifier onlyPropietarioOwner(uint256 idPropietario) {
-        require(isPropietarioOwner(idPropietario));
-        _;
-    }
-
-    function isParcelaOwner(uint256 idParcela) internal view returns(bool) {
-        return propietarioAddress[idPropietario] == msg.sender;
-    }
-    */
 }
