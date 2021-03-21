@@ -386,8 +386,6 @@ const App = {
                 $("#inpPropietarioNombre").val(nombre);
                 const balance = await getBalance().call(options);
                 $("#outPropietarioFumiCoins").text(balance + ' FUMI');
-                let balanceEther = await this.getEtherBalance(this.cuentaPropietario[propietarioNumero]);
-                $("#outPropietarioEther").text(balanceEther + ' ETH');
                 var numParcelas = await getNumeroTokens().call(options);
                 var dataSetDrones = [];
                 var numeroSolicitudes = await getNumeroSolicitudes().call(options);

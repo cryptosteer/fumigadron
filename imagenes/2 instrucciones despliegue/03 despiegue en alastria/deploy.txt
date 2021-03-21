@@ -1,0 +1,74 @@
+ubuntu@testenv:~/fumigadron/source$ truffle migrate --network alastria
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'alastria'
+> Network id:      83584648538
+> Block gas limit: 699999958 (0x29b926d6)
+
+
+2_deploy_fumigadron.js
+======================
+
+   Deploying 'FumiCoin'
+   --------------------
+   > transaction hash:    0x5048c1abf320eec77261c24a66914defb9cbefde951218b737d278983f24c15d
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x31cC8B76Da70cBA79a907e36e391f7B6640e8ad0
+   > block number:        65098917
+   > block timestamp:     1616249500
+   > account:             0xbc869c21d631E122d35789942A573241ec04D2E4
+   > balance:             0
+   > gas used:            1698299 (0x19e9fb)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   Deploying 'Propietarios'
+   ------------------------
+   > transaction hash:    0x8382f1077671656a1bb93aefc62a8f12ecebcb41515f3e67992a12b57742937d
+   > Blocks: 3            Seconds: 4
+   > contract address:    0x8Fb5fc5a492a028A684A1a3b7F200d9D3dA26c9D
+   > block number:        65098920
+   > block timestamp:     1616249503
+   > account:             0xbc869c21d631E122d35789942A573241ec04D2E4
+   > balance:             0
+   > gas used:            4220661 (0x4066f5)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   Deploying 'FumigaDron'
+   ----------------------
+   > transaction hash:    0x0da9119ab766d5ebd056d5a9755d2a250129388dbea8990d19c8944984da2ef5
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x2602615d41c8cE464dfF34ed4E81cC1675918fEb
+   > block number:        65098923
+   > block timestamp:     1616249506
+   > account:             0xbc869c21d631E122d35789942A573241ec04D2E4
+   > balance:             0
+   > gas used:            3362945 (0x335081)
+   > gas price:           0 gwei
+   > value sent:          0 ETH
+   > total cost:          0 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:                   0 ETH
+
+
+Summary
+=======
+> Total deployments:   3
+> Final cost:          0 ETH
+
