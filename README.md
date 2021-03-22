@@ -6,9 +6,7 @@ Para un mejor entendimiento del proyecto se sugiere leer el documento [Memoria.p
 
 ## Pre-requisitos
 
-Este proyecto utiliza Node para su ejecución. 
-
-Adicionalmente se emplea [Truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
+Este proyecto emplea [Truffle](https://www.trufflesuite.com/docs/truffle/getting-started/installation) para su ejecución, el cual estaba basado en Node.
 
 ## Instalación y ejecución
 
